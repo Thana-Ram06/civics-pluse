@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Civic Plus</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full mx-4">
+        <!-- Logo and Title -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4">
+                <i class="fas fa-user-plus text-2xl text-white"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800">Create Account</h1>
+            <p class="text-gray-600 mt-2">Join Civic Plus to track your reported issues</p>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <form id="register-form">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Full Name
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="full-name" class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your full name" required>
+                        <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                    </label>
+                    <div class="relative">
+                        <input type="email" id="email" class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your email" required>
+                        <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="password" class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Create a password" required>
+                        <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <button type="button" id="toggle-password" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Confirm Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="confirm-password" class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Confirm your password" required>
+                        <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Ward/Area
+                    </label>
+                    <div class="relative">
+                        <select id="ward" class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                            <option value="">Select your ward/area</option>
+                            <option value="ward1">Ward 1 - Downtown</option>
+                            <option value="ward2">Ward 2 - Residential North</option>
+                            <option value="ward3">Ward 3 - Commercial District</option>
+                            <option value="ward4">Ward 4 - Industrial Zone</option>
+                            <option value="ward5">Ward 5 - Suburb East</option>
+                        </select>
+                        <i class="fas fa-map-marker-alt absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="terms" class="mr-2" required>
+                        <span class="text-sm text-gray-600">
+                            I agree to the <a href="#" class="text-blue-600 hover:text-blue-800">Terms of Service</a> and <a href="#" class="text-blue-600 hover:text-blue-800">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="newsletter" class="mr-2">
+                        <span class="text-sm text-gray-600">
+                            Subscribe to receive updates about civic issues in my area
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">
+                    <i class="fas fa-user-plus mr-2"></i>Create Account
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">Already have an account?</p>
+                <a href="public-login.html" class="text-blue-600 hover:text-blue-800 font-semibold">Sign in here</a>
+            </div>
+        </div>
+
+        <!-- Back to Home -->
+        <div class="text-center mt-6">
+            <a href="index.html" class="text-gray-600 hover:text-gray-800">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Registration form functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            setupPasswordToggle();
+            setupRegistrationForm();
+        });
+
+        function setupPasswordToggle() {
+            const toggleButton = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+            const icon = toggleButton.querySelector('i');
+            
+            toggleButton.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        }
+
+        function setupRegistrationForm() {
+            const form = document.getElementById('register-form');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const fullName = document.getElementById('full-name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                const ward = document.getElementById('ward').value;
+                const terms = document.getElementById('terms').checked;
+                
+                // Validate form
+                if (!validateRegistrationForm(fullName, email, password, confirmPassword, ward, terms)) {
+                    return;
+                }
+                
+                // Simulate registration
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating Account...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    // Create user account
+                    const newUser = {
+                        email: email.toLowerCase(),
+                        name: fullName,
+                        role: 'citizen',
+                        ward: ward,
+                        registeredDate: new Date().toISOString()
+                    };
+                    
+                    // Save to localStorage
+                    localStorage.setItem('currentUser', JSON.stringify(newUser));
+                    
+                    showNotification('Account created successfully! Welcome to Civic Plus!', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'citizen-dashboard.html';
+                    }, 2000);
+                }, 1500);
+            });
+        }
+
+        function validateRegistrationForm(fullName, email, password, confirmPassword, ward, terms) {
+            let isValid = true;
+            
+            // Clear previous errors
+            document.querySelectorAll('.form-error').forEach(error => error.remove());
+            document.querySelectorAll('.form-input').forEach(input => input.classList.remove('error'));
+            
+            // Validate full name
+            if (!fullName.trim()) {
+                showFieldError('full-name', 'Full name is required');
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.trim()) {
+                showFieldError('email', 'Email address is required');
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                showFieldError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password) {
+                showFieldError('password', 'Password is required');
+                isValid = false;
+            } else if (password.length < 6) {
+                showFieldError('password', 'Password must be at least 6 characters long');
+                isValid = false;
+            }
+            
+            // Validate confirm password
+            if (!confirmPassword) {
+                showFieldError('confirm-password', 'Please confirm your password');
+                isValid = false;
+            } else if (password !== confirmPassword) {
+                showFieldError('confirm-password', 'Passwords do not match');
+                isValid = false;
+            }
+            
+            // Validate ward
+            if (!ward) {
+                showFieldError('ward', 'Please select your ward/area');
+                isValid = false;
+            }
+            
+            // Validate terms
+            if (!terms) {
+                showFieldError('terms', 'You must agree to the Terms of Service');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            field.classList.add('error');
+            
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'form-error';
+            errorDiv.textContent = message;
+            
+            field.parentNode.appendChild(errorDiv);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Civic Plus</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <i class="fas fa-city text-2xl mr-3"></i>
+                        <h1 class="text-xl font-bold">Civic Plus</h1>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="citizen-form.html" class="hover:text-blue-200 transition-colors">
+                        <i class="fas fa-camera mr-2"></i>Report Issue
+                    </a>
+                    <a href="public-login.html" class="hover:text-blue-200 transition-colors">
+                        <i class="fas fa-user mr-2"></i>Citizen Login
+                    </a>
+                    <a href="admin-login.html" class="hover:text-blue-200 transition-colors">
+                        <i class="fas fa-shield-alt mr-2"></i>Admin Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                <i class="fas fa-trophy mr-4"></i>Performance Leaderboard
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100">See which wards and officials are delivering the best public service</p>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid md:grid-cols-4 gap-6 mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="text-3xl font-bold text-purple-600 mb-2" id="total-wards">15</div>
+                <div class="text-gray-600">Total Wards</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2" id="avg-response-time">2.3</div>
+                <div class="text-gray-600">Avg. Response Time (days)</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="text-3xl font-bold text-blue-600 mb-2" id="avg-rating">4.1</div>
+                <div class="text-gray-600">Average Rating</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="text-3xl font-bold text-yellow-600 mb-2" id="total-resolved">1,247</div>
+                <div class="text-gray-600">Issues Resolved</div>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="bg-white rounded-lg shadow-lg mb-8">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
+                    <button class="leaderboard-tab active" data-type="wards">
+                        <i class="fas fa-map-marked-alt mr-2"></i>Wards
+                    </button>
+                    <button class="leaderboard-tab" data-type="officials">
+                        <i class="fas fa-user-tie mr-2"></i>Officials
+                    </button>
+                    <button class="leaderboard-tab" data-type="departments">
+                        <i class="fas fa-building mr-2"></i>Departments
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Wards Leaderboard -->
+        <div id="wards-leaderboard" class="leaderboard-section">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        <i class="fas fa-map-marked-alt mr-3 text-purple-600"></i>Ward Performance Rankings
+                    </h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ward</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Officer</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Response Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issues Resolved</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wards-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Wards will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Officials Leaderboard -->
+        <div id="officials-leaderboard" class="leaderboard-section hidden">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        <i class="fas fa-user-tie mr-3 text-blue-600"></i>Top Performing Officials
+                    </h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Official</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Response Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issues Handled</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Badge</th>
+                            </tr>
+                        </thead>
+                        <tbody id="officials-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Officials will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Departments Leaderboard -->
+        <div id="departments-leaderboard" class="leaderboard-section hidden">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        <i class="fas fa-building mr-3 text-green-600"></i>Department Performance
+                    </h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Response Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issues Resolved</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Success Rate</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody id="departments-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Departments will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievement Badges Section -->
+        <div class="mt-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-medal mr-3 text-yellow-600"></i>Achievement Badges
+                </h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center p-6 border-2 border-yellow-300 rounded-lg bg-yellow-50">
+                        <i class="fas fa-trophy text-4xl text-yellow-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Rapid Responder</h3>
+                        <p class="text-gray-600 text-sm">Resolves issues within 24 hours</p>
+                    </div>
+                    <div class="text-center p-6 border-2 border-green-300 rounded-lg bg-green-50">
+                        <i class="fas fa-star text-4xl text-green-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Citizen Favorite</h3>
+                        <p class="text-gray-600 text-sm">Maintains 4.5+ star rating</p>
+                    </div>
+                    <div class="text-center p-6 border-2 border-blue-300 rounded-lg bg-blue-50">
+                        <i class="fas fa-handshake text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Community Champion</h3>
+                        <p class="text-gray-600 text-sm">Resolves 100+ issues</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Achievements -->
+        <div class="mt-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-clock mr-3 text-purple-600"></i>Recent Achievements
+                </h2>
+                <div id="recent-achievements" class="space-y-4">
+                    <!-- Achievements will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Civic Plus</h3>
+                    <p class="text-gray-400">Making local governance transparent and accountable through citizen participation.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="citizen-form.html" class="hover:text-white">Report Issue</a></li>
+                        <li><a href="public-issues.html" class="hover:text-white">Public Issues</a></li>
+                        <li><a href="leaderboard.html" class="hover:text-white">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Account</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="public-login.html" class="hover:text-white">Citizen Login</a></li>
+                        <li><a href="admin-login.html" class="hover:text-white">Admin Login</a></li>
+                        <li><a href="register.html" class="hover:text-white">Register</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <p class="text-gray-400">Email: support@civicplus.com</p>
+                    <p class="text-gray-400">Phone: (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Civic Plus. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="leaderboard.js"></script>
+</body>
+</html>

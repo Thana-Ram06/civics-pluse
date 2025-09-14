@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civic Plus - Report Local Issues</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-city text-2xl mr-3"></i>
+                    <h1 class="text-xl font-bold">Civic Plus</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="public-login.html" class="hover:text-blue-200 transition-colors">
+                        <i class="fas fa-user mr-2"></i>Citizen Login
+                    </a>
+                    <a href="admin-login.html" class="hover:text-blue-200 transition-colors">
+                        <i class="fas fa-shield-alt mr-2"></i>Admin Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Make Your Voice Heard</h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100">Report local issues and hold officials accountable</p>
+            <a href="citizen-form.html" class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors inline-block">
+                <i class="fas fa-camera mr-2"></i>Report an Issue
+            </a>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">How It Works</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-camera text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">1. Report</h3>
+                    <p class="text-gray-600">Upload a photo of local issues like potholes, garbage, or broken streetlights</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marker-alt text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">2. Track</h3>
+                    <p class="text-gray-600">Your issue is automatically tagged with location and sent to responsible officials</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-star text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">3. Rate</h3>
+                    <p class="text-gray-600">Rate how well officials handle your issue and keep them accountable</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="bg-gray-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-bold text-blue-400 mb-2">1,247</div>
+                    <div class="text-gray-300">Issues Reported</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-green-400 mb-2">892</div>
+                    <div class="text-gray-300">Issues Resolved</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-yellow-400 mb-2">4.2</div>
+                    <div class="text-gray-300">Avg. Rating</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-purple-400 mb-2">15</div>
+                    <div class="text-gray-300">Wards Covered</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Issues Section -->
+    <div class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Recent Public Issues</h2>
+            <div id="recent-issues" class="grid md:grid-cols-3 gap-6">
+                <!-- Issues will be loaded dynamically -->
+            </div>
+            <div class="text-center mt-8">
+                <a href="public-issues.html" class="text-blue-600 hover:text-blue-800 font-semibold">
+                    View All Public Issues <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Civic Plus</h3>
+                    <p class="text-gray-400">Making local governance transparent and accountable through citizen participation.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="citizen-form.html" class="hover:text-white">Report Issue</a></li>
+                        <li><a href="public-issues.html" class="hover:text-white">Public Issues</a></li>
+                        <li><a href="leaderboard.html" class="hover:text-white">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Account</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="public-login.html" class="hover:text-white">Citizen Login</a></li>
+                        <li><a href="admin-login.html" class="hover:text-white">Admin Login</a></li>
+                        <li><a href="register.html" class="hover:text-white">Register</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <p class="text-gray-400">Email: support@civicplus.com</p>
+                    <p class="text-gray-400">Phone: (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Civic Plus. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
