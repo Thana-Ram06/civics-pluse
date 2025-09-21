@@ -1,0 +1,120 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "citizen@example.com",
+      "name": "John Citizen",
+      "role": "citizen",
+      "ward": "ward1",
+      "password": "password123",
+      "registeredDate": "2025-09-17T17:37:32.670Z"
+    },
+    {
+      "id": 2,
+      "email": "admin@example.com",
+      "name": "Jane Admin",
+      "role": "admin",
+      "ward": "ward1",
+      "password": "admin123",
+      "registeredDate": "2025-09-17T17:37:32.672Z"
+    }
+  ],
+  "issues": [
+    {
+      "id": 1,
+      "title": "Large Pothole on Main Street",
+      "description": "A large pothole causing traffic congestion and vehicle damage",
+      "issueType": "pothole",
+      "location": {
+        "address": "Main Street, Downtown",
+        "lat": 40.7128,
+        "lng": -74.006
+      },
+      "priority": "high",
+      "status": "delayed",
+      "reportedDate": "2024-01-15",
+      "reporterName": "John Citizen",
+      "reporterEmail": "john@example.com",
+      "imageUrl": "https://via.placeholder.com/400x300?text=Pothole+Issue",
+      "adminNotes": "",
+      "daysOpen": 3,
+      "rating": null,
+      "reportedBy": "citizen@example.com",
+      "ward": "ward1",
+      "votes": 0,
+      "voteScore": 0
+    },
+    {
+      "id": 2,
+      "title": "Broken Streetlight",
+      "description": "Streetlight not working for over 2 weeks, making area unsafe at night",
+      "issueType": "streetlight",
+      "location": {
+        "address": "Oak Avenue, Residential Area",
+        "lat": 40.7589,
+        "lng": -73.9851
+      },
+      "priority": "medium",
+      "status": "resolved",
+      "reportedDate": "2024-01-10",
+      "reporterName": "Jane Smith",
+      "reporterEmail": "jane@example.com",
+      "imageUrl": "https://via.placeholder.com/400x300?text=Broken+Streetlight",
+      "adminNotes": "Fixed by replacing the faulty bulb and checking electrical connections",
+      "daysOpen": 0,
+      "rating": 4.2,
+      "reportedBy": "jane@example.com",
+      "ward": "ward2",
+      "votes": 0,
+      "voteScore": 0
+    },
+    {
+      "id": 3,
+      "title": "Automated Test Issue",
+      "description": "Created by scripts/post-test.js",
+      "issueType": "other",
+      "location": {
+        "address": {
+          "address": "Scripted Ave"
+        }
+      },
+      "priority": "low",
+      "status": "pending",
+      "reportedDate": "2025-09-19",
+      "reporterName": "Script Agent",
+      "reporterEmail": "script@example.com",
+      "imageUrl": null,
+      "adminNotes": "",
+      "daysOpen": 0,
+      "rating": null,
+      "reportedBy": "citizen@example.com",
+      "ward": null,
+      "votes": 0,
+      "voteScore": 0
+    },
+    {
+      "id": 4,
+      "title": "Automated Test Issue",
+      "description": "Created by scripts/post-test.js",
+      "issueType": "other",
+      "location": {
+        "address": {
+          "address": "Scripted Ave"
+        }
+      },
+      "priority": "low",
+      "status": "pending",
+      "reportedDate": "2025-09-19",
+      "reporterName": "Script Agent",
+      "reporterEmail": "script@example.com",
+      "imageUrl": null,
+      "adminNotes": "",
+      "daysOpen": 0,
+      "rating": null,
+      "reportedBy": "citizen@example.com",
+      "ward": null,
+      "votes": 0,
+      "voteScore": 0
+    }
+  ]
+}

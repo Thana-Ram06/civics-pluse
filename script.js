@@ -78,71 +78,43 @@ function showNotification(message, type = 'success') {
 }
 
 function loadRecentIssues() {
-    // Simulate loading recent public issues
-    const recentIssues = [
-        {
-            id: 1,
-            title: "Pothole on Main Street",
-            description: "Large pothole causing traffic issues",
-            location: "Main Street, Downtown",
-            image: "https://via.placeholder.com/300x200?text=Pothole+Issue",
-            status: "delayed",
-            reportedDate: "2024-01-15",
-            rating: 2.5,
-            votes: 12
-        },
-        {
-            id: 2,
-            title: "Broken Streetlight",
-            description: "Streetlight not working for 2 weeks",
-            location: "Oak Avenue, Residential Area",
-            image: "https://via.placeholder.com/300x200?text=Broken+Streetlight",
-            status: "resolved",
-            reportedDate: "2024-01-10",
-            rating: 4.2,
-            votes: 8
-        },
-        {
-            id: 3,
-            title: "Garbage Collection Issue",
-            description: "Garbage not collected for 3 days",
-            location: "Pine Street, Commercial District",
-            image: "https://via.placeholder.com/300x200?text=Garbage+Issue",
-            status: "pending",
-            reportedDate: "2024-01-18",
-            rating: null,
-            votes: 0
-        }
-    ];
-
+    // Load recent issues from backend API
     const container = document.getElementById('recent-issues');
-    if (container) {
-        container.innerHTML = recentIssues.map(issue => `
-            <div class="issue-card bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="${issue.image}" alt="${issue.title}" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg mb-2">${issue.title}</h3>
-                    <p class="text-gray-600 text-sm mb-2">${issue.description}</p>
-                    <p class="text-gray-500 text-xs mb-3">
-                        <i class="fas fa-map-marker-alt mr-1"></i>${issue.location}
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="status-badge status-${issue.status}">
-                            ${issue.status.charAt(0).toUpperCase() + issue.status.slice(1)}
-                        </span>
-                        ${issue.rating ? `
-                            <div class="flex items-center">
-                                <div class="rating-stars mr-1">
-                                    ${generateStars(issue.rating)}
+    if (!container) return;
+
+    fetch('/api/issues')
+        .then(res => res.json())
+        .then(issues => {
+            container.innerHTML = issues.slice(0,6).map(issue => `
+                <div class="issue-card bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="${issue.imageUrl || 'https://via.placeholder.com/300x200?text=Issue'}" alt="${issue.title}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-2">${issue.title}</h3>
+                        <p class="text-gray-600 text-sm mb-2">${issue.description}</p>
+                        <p class="text-gray-500 text-xs mb-3">
+                            <i class="fas fa-map-marker-alt mr-1"></i>${issue.location && issue.location.address ? issue.location.address : ''}
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="status-badge status-${issue.status}">
+                                ${issue.status ? (issue.status.charAt(0).toUpperCase() + issue.status.slice(1)) : ''}
+                            </span>
+                            ${issue.rating ? `
+                                <div class="flex items-center">
+                                    <div class="rating-stars mr-1">
+                                        ${generateStars(issue.rating)}
+                                    </div>
+                                    <span class="text-sm text-gray-600">${issue.rating}/5</span>
                                 </div>
-                                <span class="text-sm text-gray-600">${issue.rating}/5</span>
-                            </div>
-                        ` : ''}
+                            ` : ''}
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
-    }
+            `).join('');
+        })
+        .catch(err => {
+            console.error('Failed to load issues', err);
+            container.innerHTML = '<p class="text-gray-600">Unable to load recent issues.</p>';
+        });
 }
 
 function generateStars(rating) {
@@ -226,46 +198,34 @@ function validateForm(formId) {
 
 // API simulation functions
 function submitIssue(issueData) {
-    return new Promise((resolve) => {
-        // Simulate API call
-        setTimeout(() => {
-            const newIssue = {
-                id: Date.now(),
-                ...issueData,
-                status: 'pending',
-                reportedDate: new Date().toISOString().split('T')[0],
-                rating: null,
-                votes: 0
-            };
-            
-            // Save to localStorage for demo purposes
-            const existingIssues = JSON.parse(localStorage.getItem('issues') || '[]');
-            existingIssues.push(newIssue);
-            localStorage.setItem('issues', JSON.stringify(existingIssues));
-            
-            resolve(newIssue);
-        }, 1000);
-    });
+    // Send issue to backend API (expects JSON body)
+    return fetch('/api/issues', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(issueData)
+    }).then(res => {
+        if (!res.ok) throw new Error('Failed to submit issue');
+        return res.json();
+    }).then(payload => payload.issue);
 }
 
 function loginUser(email, password, role) {
-    return new Promise((resolve, reject) => {
-        // Simulate API call
-        setTimeout(() => {
-            const users = {
-                'citizen@example.com': { name: 'John Citizen', role: 'citizen', ward: 'Ward 1' },
-                'admin@example.com': { name: 'Jane Admin', role: 'admin', ward: 'Ward 1' }
-            };
-
-            if (users[email] && users[email].role === role) {
-                const user = { email, ...users[email] };
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                currentUser = user;
-                resolve(user);
-            } else {
-                reject('Invalid credentials');
-            }
-        }, 500);
+    // Call backend login endpoint
+    return fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, role })
+    }).then(async res => {
+        if (!res.ok) {
+            const err = await res.json().catch(() => null);
+            throw new Error(err && err.message ? err.message : 'Login failed');
+        }
+        return res.json();
+    }).then(payload => {
+        const user = payload.user;
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        currentUser = user;
+        return user;
     });
 }
 
