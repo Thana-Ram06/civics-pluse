@@ -56,29 +56,48 @@ app.get('/api/issues', (req, res) => {
   });
 });
 
-app.post('/api/issues', upload.single('image'), (req, res) => {
-  const body = req.body;
-  let location = {};
-  if (body.location) {
-    try { location = JSON.parse(body.location); } catch (e) { location = { address: body.location }; }
+app.post('/api/issues', (req, res) => {
+  // Helper to build and persist the issue from a request object
+  function handleIssueRequest(rq, rs) {
+    const body = rq.body || {};
+    let location = {};
+    if (body.location) {
+      try {
+        location = typeof body.location === 'string' ? JSON.parse(body.location) : body.location;
+      } catch (e) {
+        location = { address: body.location };
+      }
+    }
+
+    const imageUrl = rq.file ? `https://via.placeholder.com/400x300?text=${encodeURIComponent(body.title || body.issueType || 'Issue')}` : (body.imageUrl || null);
+    const issue = {
+      title: body.title || body.issueType,
+      description: body.description,
+      issueType: body.issueType,
+      location,
+      priority: body.priority || 'low',
+      imageUrl,
+      reportedBy: body.reportedBy || 'anonymous',
+      reporterName: body.reporterName || null,
+      reporterEmail: body.reporterEmail || null,
+      ward: body.ward || null
+    };
+
+    db.createIssue(issue, (err, created) => {
+      if (err) return rs.status(500).json({ success: false, message: 'DB error' });
+      rs.json({ success: true, issue: created });
+    });
   }
-  const imageUrl = req.file ? `https://via.placeholder.com/400x300?text=${encodeURIComponent(body.title || body.issueType || 'Issue')}` : (body.imageUrl || null);
-  const issue = {
-    title: body.title || body.issueType,
-    description: body.description,
-    issueType: body.issueType,
-    location,
-    priority: body.priority || 'low',
-    imageUrl,
-    reportedBy: body.reportedBy || 'anonymous',
-    reporterName: body.reporterName || null,
-    reporterEmail: body.reporterEmail || null,
-    ward: body.ward || null
-  };
-  db.createIssue(issue, (err, created) => {
-    if (err) return res.status(500).json({ success: false, message: 'DB error' });
-    res.json({ success: true, issue: created });
-  });
+
+  // If request is multipart/form-data, let multer parse it; otherwise handle JSON body
+  if (req.is && req.is('multipart/form-data')) {
+    upload.single('image')(req, res, function(err) {
+      if (err) return res.status(400).json({ success: false, message: 'Upload error' });
+      handleIssueRequest(req, res);
+    });
+  } else {
+    handleIssueRequest(req, res);
+  }
 });
 
 app.put('/api/issues/:id/status', (req, res) => {
