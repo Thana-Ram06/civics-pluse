@@ -1,24 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const multer = require('multer');
-const db = require('./db');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 /*
-  The server implementation has been commented out to allow a pure frontend
-  static deployment. The original server used Node/Express and a database.
-  For a static-only version we keep this file for reference but do not run it.
+  server.js - server-side code intentionally removed.
 
-  If you need the server back, uncomment this file and ensure the environment
-  supports Node and any required native modules.
+  This project has been converted to a static-only frontend using
+  in-browser persistence (localStorage). The original server implementation
+  used Express, multer, and a database. Those files are retained in the
+  repository as commented references, but the runtime code has been removed
+  to prevent accidental execution in serverless/static environments.
 
-  -- server.js (commented out) --
-
+  If you later want to re-enable the backend, restore the original files
+  from version control history or contact the maintainer.
 */
-    if (err) return res.status(500).json({ success: false, message: 'DB error' });
+
+// Placeholder export to avoid require-time errors in tooling.
+module.exports = {};

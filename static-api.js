@@ -1,3 +1,115 @@
+/*
+  static-api.js
+
+  Small in-browser persistence layer for the static-only version of the app.
+  It stores data under localStorage key `civicplus_db_v1` and exposes a
+  Promise-based API similar to a simple REST client so existing frontend
+  scripts can call it without heavy changes.
+
+  Usage (from client code):
+    window.StaticAPI.listIssues().then(issues => ...)
+    window.StaticAPI.createIssue(issue).then(created => ...)
+
+  The data model is minimal and compatible with the previous server API:
+    { issues: [ { id, title, description, status, createdAt, votes, rating } ],
+      users: [ { id, name, email } ] }
+*/
+
+(function () {
+  const STORAGE_KEY = 'civicplus_db_v1'
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (!raw) return { issues: [], users: [] }
+      return JSON.parse(raw)
+    } catch (e) {
+      console.error('StaticAPI: failed to load DB', e)
+      return { issues: [], users: [] }
+    }
+  }
+
+  function save(db) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db))
+  }
+
+  function nextId(items) {
+    return items.length ? Math.max(...items.map(i => i.id || 0)) + 1 : 1
+  }
+
+  const api = {
+    listIssues() {
+      return new Promise((resolve) => {
+        const db = load()
+        // return a shallow copy
+        resolve(db.issues.slice().sort((a, b) => b.id - a.id))
+      })
+    },
+
+    createIssue(issue) {
+      return new Promise((resolve) => {
+        const db = load()
+        const id = nextId(db.issues)
+        const now = new Date().toISOString()
+        const saved = Object.assign({
+          id,
+          title: '',
+          description: '',
+          status: 'open',
+          createdAt: now,
+          votes: 0,
+          rating: null,
+        }, issue)
+        db.issues.push(saved)
+        save(db)
+        resolve(saved)
+      })
+    },
+
+    getIssue(id) {
+      return new Promise((resolve) => {
+        const db = load()
+        resolve(db.issues.find(i => i.id === Number(id)) || null)
+      })
+    },
+
+    updateIssue(id, patch) {
+      return new Promise((resolve) => {
+        const db = load()
+        const idx = db.issues.findIndex(i => i.id === Number(id))
+        if (idx === -1) return resolve(null)
+        db.issues[idx] = Object.assign({}, db.issues[idx], patch)
+        save(db)
+        resolve(db.issues[idx])
+      })
+    },
+
+    findUserByEmail(email) {
+      return new Promise((resolve) => {
+        const db = load()
+        resolve(db.users.find(u => u.email === email) || null)
+      })
+    },
+
+    createUser(user) {
+      return new Promise((resolve) => {
+        const db = load()
+        const id = nextId(db.users)
+        const saved = Object.assign({ id }, user)
+        db.users.push(saved)
+        save(db)
+        resolve(saved)
+      })
+    },
+
+    // convenience used by some frontend pages
+    clear() {
+      localStorage.removeItem(STORAGE_KEY)
+    }
+  }
+
+  window.StaticAPI = api
+})();
 // static-api.js
 // A simple in-browser "API" implemented using localStorage so the app can run
 // entirely as static HTML/CSS/JS without a Node backend.
