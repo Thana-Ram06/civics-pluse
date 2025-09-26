@@ -82,8 +82,8 @@ function loadRecentIssues() {
     const container = document.getElementById('recent-issues');
     if (!container) return;
 
-    fetch('/api/issues')
-        .then(res => res.json())
+    const fetchIssues = window.StaticAPI ? window.StaticAPI.listIssues : () => fetch('/api/issues').then(res => res.json());
+    fetchIssues()
         .then(issues => {
             container.innerHTML = issues.slice(0,6).map(issue => `
                 <div class="issue-card bg-white rounded-lg shadow-md overflow-hidden">
@@ -198,7 +198,11 @@ function validateForm(formId) {
 
 // API simulation functions
 function submitIssue(issueData) {
-    // Send issue to backend API (expects JSON body)
+    // Prefer in-browser StaticAPI if available (localStorage) so the app can run
+    // without a backend. Otherwise POST to /api/issues.
+    if (window.StaticAPI) {
+        return window.StaticAPI.createIssue(issueData);
+    }
     return fetch('/api/issues', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
