@@ -143,9 +143,16 @@ function checkDelayedIssues() {
   });
 }
 
+// Initialize DB but avoid starting background tasks or a listener when this file
+// is required by serverless platforms (we only want them when running as a standalone server).
 db.init();
-setInterval(checkDelayedIssues, 5 * 60 * 1000);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (require.main === module) {
+  // Only start background tasks and the listener when run directly (node server.js)
+  setInterval(checkDelayedIssues, 5 * 60 * 1000);
 
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+// Export the Express `app` so it can be required by serverless wrappers (e.g. Vercel API functions)
 module.exports = app;
